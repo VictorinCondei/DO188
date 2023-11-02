@@ -1,0 +1,30 @@
+  212  cp -rf ../DO188/* DO188/
+  213  git status
+  214  cd DO188/
+  215  git status
+  216  git add *
+  217  git commit "add one step"
+  218  git commit -m "add one step"
+  219  git push
+  220  podman volumes list
+  221  podman volume list
+  222  lab finish custom-advanced
+  223  cd
+  224  rm -rf tmp/
+  225  lab start basic-exposing
+  226  lab start basics-exposing
+  227  podman network inspect podman 
+  228  cd DO188/labs/basics-exposing/
+  229  ls -l
+  230  cat podman-info-times/app/main.go 
+  231  podman network create cities
+  232  podman network inspect cities
+  233  podman run -d --name times-app -p 8080:8080 --network cities registry.ocp4.example.com:8443/redhattraining/podman-info-times:v0.1
+  235  podman inspect times-app -f '{{.NetworkSettings.Networks.cities.IPAdress}}'
+  236  podman inspect times-app -f '{{.NetworkSettings.Networks.cities.IPAddress}}'
+  237  podman run --rm --network cities registry.ocp4.example.com:8443/ubi8/ubi-minimal:8.5 curl -s http://10.89.0.2:8080/times/BKK; echo
+  238  podman ps
+  239  podman run --rm --network cities registry.ocp4.example.com:8443/ubi8/ubi-minimal:8.5 curl -s http://times-app:8080/times/BKK; echo
+  240  cat podman-info-times/app/main.go 
+  241  cat podman-info-cities/app/main.go 
+  243  podman run --name cities-app --network cities -p 8090:8090 -e TIMES_APP_URL=http://times-app:8080/times registry.ocp4.example.com:8443/redhattraining/podman-info-cities:v0.1 -d
